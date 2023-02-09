@@ -1,4 +1,5 @@
 import './App.css';
+import { useState } from 'react';
 
 function App() {
     return (
@@ -7,27 +8,24 @@ function App() {
                 <h1> Cisco Sextant</h1>
             </header>
             <div className="container">
-                <Component header="Test123">
-                    <a href="https://google.com">Click me!</a>
+                <Component header="IPv4">
+                    <IPComponent type='0'/>
                 </Component>
-                <Component header="Lorem Ipsum">
-                    <a href="https://google.com">Do not click me!</a>
-                </Component>
-                <Component header="Lorem Ipsum">
-                    <a href="https://google.com">Do not click me!</a>
-                </Component>
-                <Component header="Lorem Ipsum">
-                    <a href="https://google.com">Do not click me!</a>
-                </Component>
-                <Component header="Lorem Ipsum">
-                    <a href="https://google.com">Do not click me!</a>
-                </Component>
-                <Component header="Lorem Ipsum">
-                    <a href="https://google.com">Do not click me!</a>
+                <Component header="IPv6 (if possible)">
+                    <IPComponent type='1'/>
                 </Component>
             </div>
         </div>
     );
+}
+
+function IPComponent(props){
+    const [cont, setcont] = useState("...");
+
+    if(props.type==='0'){
+    fetch("https://api.ipify.org").then((response)=>(response.text().then((text)=>{setcont(text)})));}
+    else{fetch("https://api64.ipify.org").then((response)=>(response.text().then((text)=>{setcont(text)})));}
+    return <p>{cont}</p>
 }
 
 function Component(props) {
